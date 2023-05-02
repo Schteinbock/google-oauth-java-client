@@ -27,6 +27,7 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.nio.charset.StandardCharsets;
@@ -124,7 +125,7 @@ public final class LocalServerReceiver implements VerificationCodeReceiver {
   @Override
   public String getRedirectUri() throws IOException {
 
-    server = HttpServer.create(new InetSocketAddress(port != -1 ? port : findOpenPort()), 0);
+    server = HttpServer.create(new InetSocketAddress(InetAddress.getLoopbackAddress(),port != -1 ? port : findOpenPort()), 0);
     HttpContext context = server.createContext(callbackPath, new CallbackHandler());
     server.setExecutor(null);
 
